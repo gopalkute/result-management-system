@@ -1,14 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
-const studentSchema = new Schema(
+const HODSchema = new Schema(
    {
-      prn: {
-         type: String,
-         unique: true,
-         required: true,
-         index: true,
-         trim: true,
-      },
       name: {
          type: String,
          required: true,
@@ -23,8 +16,8 @@ const studentSchema = new Schema(
          type: String, // hashed password store
          required: true,
       },
-      refreshToken: {
-         type: String, // for varification and providing the access token
+      refreshToken: {  // for varification and providing the access token
+         type: String,
       },
       branch: {
          type: Schema.Types.ObjectId, // refer to the branch
@@ -36,4 +29,4 @@ const studentSchema = new Schema(
    }
 );
 
-export const Student = mongoose.model("Student", studentSchema);
+export const HOD = mongoose.model("HOD", HODSchema);

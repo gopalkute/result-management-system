@@ -2,6 +2,13 @@ import mongoose, { Schema } from "mongoose";
 
 const HODSchema = new Schema(
    {
+      uid: {
+         type: String,
+         unique: true,
+         required: true,
+         index: true,
+      },
+
       name: {
          type: String,
          required: true,
@@ -16,7 +23,8 @@ const HODSchema = new Schema(
          type: String, // hashed password store
          required: true,
       },
-      refreshToken: {  // for varification and providing the access token
+      refreshToken: {
+         // for varification and providing the access token
          type: String,
       },
       branch: {

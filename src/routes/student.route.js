@@ -1,22 +1,59 @@
-// routes/studentRoutes.js
 import express from "express";
-import { getStudents, getStudentByPRN, createStudent, updateStudent, deleteStudent } from "../controllers/student.controller.js";
-
+import {
+   createStudents,
+   addANewStudent,
+   updateStudent,
+   getAllStudents,
+   getStudentById,
+   deleteStudent,
+} from "../controllers/student.controller.js";
+import {
+   studentValidation,
+   createStudentValidation,
+   updateStudentValidation,
+   validateStudentId,
+} from "../validations/student.validation.js";
+import authMiddleware from "../middlewares/auth.middleware.js";
+import { validateRequest } from "../middlewares/validate.middleware.js";
+import { upload } from "../middlewares/multer.middleware.js";
+import resultRoutes from "../routes/result.route.js";
 const router = express.Router();
 
-// Get all students
-router.get("/", getStudents);
+router.use("/result", resultRoutes);
 
-// Get student by PRN
-router.get("/:prn", getStudentByPRN);
+router.post(
+   "/create",
+   upload.single("file"),
+   authMiddleware(["admin", "hod"]),
+   studentValidation,
+   createStudents
+);
 
-// Create a new student
-router.post("/", createStudent);
+router.post(
+   "/",
+   authMiddleware(["admin", "hod"]),
+   createStudentValidation,
+   validateRequest,
+   addANewStudent
+);
 
-// Update student by PRN
-router.put("/:prn", updateStudent);
+router.get("/", authMiddleware(["admin", "hod"]), getAllStudents);
+router.get("/:id", validateStudentId, validateRequest, getStudentById);
 
-// Delete student by PRN
-router.delete("/:prn", deleteStudent);
+router.put(
+   "/:id",
+   authMiddleware(["admin", "hod"]),
+   updateStudentValidation,
+   validateRequest,
+   updateStudent
+);
+
+router.delete(
+   "/:id",
+   authMiddleware(["admin", "hod"]),
+   validateStudentId,
+   validateRequest,
+   deleteStudent
+);
 
 export default router;

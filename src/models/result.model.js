@@ -2,12 +2,9 @@ import mongoose, { Schema } from "mongoose";
 
 const resultSchema = new Schema(
    {
-      prn: {
-         type: String,
-         required: true,
-         unique: true,
-         index: true,
-         trim: true,
+      branch: {
+         type: Schema.Types.ObjectId,
+         ref: "Branch",
       },
       year: {
          type: Number,
@@ -16,6 +13,10 @@ const resultSchema = new Schema(
       sem: {
          type: Number,
          required: true,
+      },
+      prn: {
+         type: Schema.Types.ObjectId,
+         ref: "Student",
       },
       result: [
          {

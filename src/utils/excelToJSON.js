@@ -25,4 +25,23 @@ const excelToJSON = function (filePath, branch, year, sem) {
    return results;
 };
 
-export { excelToJSON };
+const excelToStudents = function (filePath, branch) {
+   const workbook = xlsx.readFile(filePath);
+   const sheetName = workbook.SheetNames[0];
+   const sheet = workbook.Sheets[sheetName];
+
+   const jsonData = xlsx.utils.sheet_to_json(sheet);
+
+   // Format the data
+   const students = jsonData.map((row) => ({
+      prn: row.PRN.toString(),
+      name: row.Name,
+      email: row.Email,
+      password: row.Password, // This will be hashed later
+      branch: branch,
+   }));
+
+   return students;
+};
+
+export { excelToJSON, excelToStudents };

@@ -1,22 +1,59 @@
-// routes/hodRoutes.js
 import express from "express";
-import { getHODs, getHODById, createHOD, updateHOD, deleteHOD } from "../controllers/hod.controller.js";
-
 const router = express.Router();
+import authMiddleware from "../middlewares/auth.middleware.js";
 
-// Get all HODs
-router.get("/", getHODs);
+import {
+   addANewHod,
+   getAllHods,
+   getHodDetails,
+   updateHodDetails,
+   deleteHod,
+} from "../controllers/hod.controller.js";
 
-// Get HOD by ID
-router.get("/:uid", getHODById);
+import {
+   createHODValidation,
+   updateHODValidation,
+   validateHODId,
+} from "../validations/hod.validation.js";
+import { validateRequest } from "../middlewares/validate.middleware.js";
+import studentRoutes from "../routes/student.route.js";
+import resultRoutes from "../routes/result.route.js";
 
-// Create a new HOD
-router.post("/", createHOD);
+router.use("/student", studentRoutes);
+router.use("/result", resultRoutes);
 
-// Update HOD by ID
-router.put("/:uid", updateHOD);
+router.get("/", authMiddleware(["admin"]), getAllHods);
 
-// Delete HOD by ID
-router.delete("/:uid", deleteHOD);
+router.get(
+   "/:id",
+   authMiddleware(["admin"]),
+   validateHODId,
+   validateRequest,
+   getHodDetails
+);
+
+router.post(
+   "/",
+   authMiddleware(["admin"]),
+   createHODValidation,
+   validateRequest,
+   addANewHod
+);
+
+router.put(
+   "/:id",
+   authMiddleware(["admin"]),
+   updateHODValidation,
+   validateRequest,
+   updateHodDetails
+);
+
+router.delete(
+   "/:id",
+   authMiddleware(["admin"]),
+   validateHODId,
+   validateRequest,
+   deleteHod
+);
 
 export default router;

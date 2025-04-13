@@ -1,6 +1,5 @@
 class ApiResponse {
-   // create an object for send response to the frontend
-   constructor(message, data = {}) {
+   constructor(message = "Success", data) {
       this.success = true;
       this.message = message;
       this.data = data;
@@ -8,13 +7,10 @@ class ApiResponse {
 }
 
 class ApiError {
-   // create an object for send error to the frontend
-   constructor(message, error = "", statusCode = 400) {
+   constructor(message = "Something went wrong") {
       this.success = false;
       this.message = message;
-      this.error = error;
-      this.statusCode = statusCode;
    }
 }
 
-module.exports = { ApiResponse, ApiError };
+export { ApiResponse, ApiError };

@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const branchSchema = new Schema(
    {
-      branchId: {
+      code: {
          type: Number,
          required: true,
          unique: true,
@@ -12,6 +12,10 @@ const branchSchema = new Schema(
          required: true,
          unique: true,
          trim: true,
+      },
+      duration: {
+         type: Number,
+         required: true,
       },
    },
    {

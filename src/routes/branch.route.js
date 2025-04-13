@@ -1,22 +1,49 @@
-// routes/branchRoutes.js
 import express from "express";
-import { getBranches, getBranchById, createBranch, updateBranch, deleteBranch } from "../controllers/branch.controller.js";
-
 const router = express.Router();
+import authMiddleware from "../middlewares/auth.middleware.js";
+import {
+   addNewBranch,
+   getAllBranches,
+   getBranchDetails,
+   updateBranchDetails,
+   deleteBranch,
+} from "../controllers/branch.controller.js";
 
-// Get all branches
-router.get("/", getBranches);
+import {
+   createBranchValidation,
+   updateBranchValidation,
+   validateBranchId,
+} from "../validations/branch.validation.js";
 
-// Get branch by ID
-router.get("/:id", getBranchById);
+import { validateRequest } from "../middlewares/validate.middleware.js";
 
-// Create a new branch
-router.post("/", createBranch);
+router.get("/", authMiddleware(["admin"]), getAllBranches);
 
-// Update branch by ID
-router.put("/:id", updateBranch);
+router.get("/:id", authMiddleware(["admin"]), getBranchDetails);
 
-// Delete branch by ID
-router.delete("/:id", deleteBranch);
+router.post(
+   "/",
+   authMiddleware(["admin"]),
+   createBranchValidation,
+   validateRequest,
+   addNewBranch
+);
+
+router.put(
+   "/:id",
+   authMiddleware(["admin"]),
+   validateBranchId,
+   updateBranchValidation,
+   validateRequest,
+   updateBranchDetails
+);
+
+router.delete(
+   "/:id",
+   authMiddleware(["admin"]),
+   validateBranchId,
+   validateRequest,
+   deleteBranch
+);
 
 export default router;

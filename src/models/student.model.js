@@ -4,6 +4,10 @@ import jwt from "jsonwebtoken";
 
 const studentSchema = new Schema(
    {
+      branch: {
+         type: Schema.Types.ObjectId, // refer to the branch
+         ref: "Branch",
+      },
       prn: {
          type: String,
          unique: true,
@@ -28,10 +32,7 @@ const studentSchema = new Schema(
       refreshToken: {
          type: String, // for varification and providing the access token
       },
-      branch: {
-         type: Schema.Types.ObjectId, // refer to the branch
-         ref: "Branch",
-      },
+      
    },
    {
       timestamps: true,
@@ -60,6 +61,9 @@ studentSchema.methods.generateAccessToken = function () {
          email: this.email,
          prn: this.prn,
          name: this.name,
+         branch: this.branch,
+         role: "student",
+
       },
       process.env.ACCESS_TOKEN_SECRET,
       {
@@ -73,6 +77,7 @@ studentSchema.methods.generateRefreshToken = function () {
    return jwt.sign(
       {
          _id: this._id,
+         role: "student",
       },
       process.env.REFRESH_TOKEN_SECRET,
       {

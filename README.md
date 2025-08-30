@@ -7,7 +7,7 @@ A **web-based Result Management System** built with **MERN stack** (MongoDB, Exp
 ## 🚀 Features
 - 🔑 **Role-based Authentication**
   - **Admin** → Full control over all branches, users, and results  
-  - **HOD** → Manage their own branch (faculty, students, courses, results)  
+  - **HOD** → Manage their own branch (students, results)  
   - **Student** → View only their own results securely  
 
 - 📂 **Result Management**
@@ -21,15 +21,15 @@ A **web-based Result Management System** built with **MERN stack** (MongoDB, Exp
 
 - ⚡ **Tech Highlights**
   - **Backend**: Node.js, Express.js, MongoDB, Mongoose  
-  - **Frontend**: React.js, Tailwind CSS  
-  - **Security**: Password hashing (bcrypt), JWT-based authentication, cookie handling  
+  - **Frontend**: React.js, Bootstrap CSS  
+  - **Security**: Password hashing (bcryptjs), JWT-based authentication, cookie handling  
 
 ---
 
 ## 📌 Project Modules
 1. **Authentication & Authorization**  
 2. **Student Management**  
-3. **Branch & Faculty Management**  
+3. **Branch & roles Management**  
 4. **Result Management** (with Excel import support)  
 5. **Role-based Access Control**  
 
@@ -38,11 +38,13 @@ A **web-based Result Management System** built with **MERN stack** (MongoDB, Exp
 ## 🛠️ Installation
 ```bash
 # Clone repository
-git clone https://github.com/your-username/rms.git
+git clone https://github.com/gopalkute/result-management-system.git
 
 # Backend setup
 cd backend
 npm install
+create the .env file
+add credential details in the .env file
 npm start
 
 # Frontend setup
